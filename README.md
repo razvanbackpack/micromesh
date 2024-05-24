@@ -1,6 +1,6 @@
 # MiniPHP
 
-MiniPHP is a very small and lightweight PHP framework that I built as an experiment, and learning project.
+MiniPHP is a very small and lightweight PHP framework that I built as a learning project.
 
 ### What can it do:
 - Basic routing

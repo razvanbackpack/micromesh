@@ -1,3 +1,10 @@
+# Blade Cache
+/cache/*.bladec
+
+# Node modules
+node_modules/
+dist/
+
+# Composer
 composer.phar
 /vendor/
-cache/*.bladec

@@ -8,7 +8,7 @@ class Route
 {
     public static array $ROUTES;
 
-    public static function GET(
+    public static function get(
         string $route_link,
         string $controller,
         string $function_call,
@@ -19,6 +19,20 @@ class Route
             'class' => $controller,
             'function_call' => $function_call,
             'type' => 'GET',
+        ];
+    }
+
+    public static function post(
+        string $route_link,
+        string $controller,
+        string $function_call,
+    )
+    {
+        self::$ROUTES[] = [
+            'link' => $route_link,
+            'class' => $controller,
+            'function_call' => $function_call,
+            'type' => 'POST',
         ];
     }
 

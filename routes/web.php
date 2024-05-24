@@ -2,4 +2,4 @@
 use App\Core\Routing\Route;
 use App\Controllers\HomeController;
 
-Route::GET("", HomeController::class, "Home");
+Route::get("", HomeController::class, "Home");

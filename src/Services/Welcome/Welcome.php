@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services\Welcome;
-
+use App\Core\Config\Config;
 
 class Welcome
 {

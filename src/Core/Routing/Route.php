@@ -76,7 +76,6 @@ class Route
     {
         $controller_class = $registered_route['class'];
         $controller_function = $registered_route['function_call'];
-        $result2 = [];
 
         return call_user_func_array(
             [

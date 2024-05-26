@@ -1,6 +1,6 @@
-# MiniPHP
+# MicroMesh
 
-MiniPHP is a very small and lightweight PHP framework that I built as a learning project.
+MicroMesh is a very small and lightweight PHP framework that I built as a learning project.
 
 ### What can it do:
 - Basic routing

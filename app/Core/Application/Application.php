@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Core\Application;
-use Illuminate\Container\Container;
 use App\Core\Routing\Route;
 
-class Application extends Container 
+class Application 
 {
     public function __construct()
     {

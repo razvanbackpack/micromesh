@@ -18,4 +18,5 @@ First, you must install composer and run
 Then start a PHP server:  
 ```php -S 127.0.0.1:8000```
 
-Enjoy!
+---
+Made with [BladeOne](https://github.com/EFTEC/BladeOne)

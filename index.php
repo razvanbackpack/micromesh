@@ -1,9 +1,9 @@
 <?php
 namespace App;
-error_reporting(0);
+// error_reporting(0);
 require __DIR__.'/vendor/autoload.php';
 
-use App\Core\Application\Application;
+use Core\Application\Application;
 use Symfony\Component\Dotenv\Dotenv;
 
 
@@ -28,7 +28,7 @@ define('BASEDIR', __DIR__);
 
 $App = new Application();
 $App->Run();
-$App->Terminate();
+$App->Exit();
 
 // ========================== APP END ============================
 ?>

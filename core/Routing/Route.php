@@ -1,8 +1,7 @@
 <?php
-namespace App\Core\Routing;
+namespace Core\Routing;
 
-use App\Controllers;
-use App\Helpers\Request;
+use Core\Helpers\Request;
 
 class Route 
 {

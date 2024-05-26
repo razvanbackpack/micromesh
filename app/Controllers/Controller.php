@@ -1,6 +1,6 @@
 <?php
 namespace App\Controllers;
-use App\Core\View\BladeViewComponent;
+use Core\View\BladeViewComponent;
 
 class Controller
 {

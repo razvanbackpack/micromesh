@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Core\Application;
-use App\Core\Routing\Route;
+namespace Core\Application;
+use Core\Routing\Route;
 
 class Application 
 {
@@ -16,7 +16,7 @@ class Application
         // left this here anyway
     }    
 
-    public function Terminate()
+    public function Exit()
     {
         Route::ValidateRoute();
         exit();

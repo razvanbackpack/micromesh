@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace Core\Helpers;
 
 function dd(...$output_object)
 {

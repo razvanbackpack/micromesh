@@ -1,5 +1,5 @@
 <?php
-namespace App\Core\View;
+namespace Core\View;
 
 use eftec\bladeone\BladeOne;
 

@@ -2,6 +2,7 @@
 namespace Core\Routing;
 
 use Core\Helpers\Request;
+use Closure;
 
 class Route 
 {
@@ -9,8 +10,8 @@ class Route
 
     public static function get(
         string $route_link,
-        string $controller,
-        string $function_call,
+        string|Closure $controller,
+        string $function_call = null,
     )
     {
         self::$ROUTES[] = [
@@ -41,6 +42,7 @@ class Route
         $request = Request::$REQUEST_DATA;
         $request_parameters = [];
 
+       
         foreach(self::$ROUTES as $registered_route)
         {
             $next_route = false;
@@ -90,6 +92,13 @@ class Route
         $controller_class = $registered_route['class'];
         $controller_function = $registered_route['function_call'];
 
+   
+        if($controller_function===null)
+            return call_user_func_array(
+                $controller_class,
+                $request_parameters
+        );
+        
         return call_user_func_array(
             [
                 new $controller_class, 

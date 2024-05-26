@@ -8,8 +8,8 @@ trait BladeViewComponent
 { 
     function view(string $view_name = "", array $parameters = [])
     {
-        $VIEWS_FOLDER = 'views';
-        $CACHE_FOLDER = 'cache';
+        $VIEWS_FOLDER = '../views';
+        $CACHE_FOLDER = '../cache';
 
         $blade = new BladeOne($VIEWS_FOLDER, $CACHE_FOLDER);
         

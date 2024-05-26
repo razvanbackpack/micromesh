@@ -7,13 +7,13 @@ class Application
 {
     public function __construct()
     {
-        $this->loadRoutes();
+        
     }
 
     public function Run()
     {
-        // legit don't know what to do with this atm.
-        // left this here anyway
+        $this->loadRoutes();
+        DB::init();
     }    
 
     public function Exit()

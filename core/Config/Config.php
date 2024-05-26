@@ -7,6 +7,7 @@ class Config
 
     public static function get(string $config_path = "")
     {
+        //TODO: make an array with all available config files for better checks and to avoid warnings
         if($config_path == "") return null;
         
         $config_path_parts = explode('.', $config_path);
@@ -22,20 +23,15 @@ class Config
             $config_indexes .= "['".$part."']";
         });
 
-        try {
-            $config_file_data = include(self::$CONFIG_FILE_PATH.'\\'.$config_file.'.php');
-            if($config_file_data === null) return "";
-
-            $keys = str_replace(array('[', ']'), array("['", "']"), $keys); // wrapping with "'" (single qoutes)
-            $result = "";
-            
-            eval('$result = $config_file_data' . $config_indexes . ';');
-            return $result;
-
-        } catch (Exception $e)
-        {
-            return "";
-        }
+    
+        $config_file_data = include(self::$CONFIG_FILE_PATH.'\\'.$config_file.'.php');
+        if($config_file_data === null || !$config_file_data) return "";
+        $keys = [];
+        $keys = str_replace(array('[', ']'), array("['", "']"), $keys); // wrapping with "'" (single qoutes)
+        $result = "";
+        
+        eval('$result = $config_file_data' . $config_indexes . ';');
+        return $result;
 
     }
 }

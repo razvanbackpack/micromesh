@@ -4,7 +4,7 @@ MicroMesh is a very small and lightweight PHP framework that I built as a learni
 
 ### What can it do:
 - Basic routing
-  - Only GET implemented for now
+  - Only GET and POST
 - Blade template engine
 
 ### How to

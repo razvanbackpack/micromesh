@@ -1,5 +1,5 @@
 {
-    "name": "rc/miniphp",
+    "name": "rc/micromesh",
     "type": "project",
     "autoload": {
         "psr-4": {

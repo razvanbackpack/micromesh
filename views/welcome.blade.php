@@ -16,6 +16,8 @@
     <section id = "footer">
         <footer>
         {{$_ENV['APP_NAME']}} - {{$_ENV['APP_VERSION']}}
+
+        @Config("app.dummy")
         </footer>
     </section>
 </body>

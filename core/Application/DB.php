@@ -41,7 +41,6 @@ class DB {
     $db_name = self::$DB_DATABASE;
     
     try {
-      self::$db = new PDO("mysql:$host=localhost;dbname=$db_name", self::$DB_USERNAME, self::$DB_PASSWORD, array(
       self::$db = new PDO("mysql:host=$host;dbname=$db_name", self::$DB_USERNAME, self::$DB_PASSWORD, array(
           PDO::ATTR_PERSISTENT => true
       ));

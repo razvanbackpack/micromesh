@@ -1,5 +1,5 @@
 {
-    "name": "rc/micromesh",
+    "name": "razvancode/micromesh",
     "type": "project",
     "autoload": {
         "psr-4": {

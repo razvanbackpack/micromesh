@@ -10,7 +10,7 @@ MicroMesh is a very small and lightweight PHP framework that I built as a learni
   - Only mysql implemented for now
 
 ### How to
-Follow the `WelcomeController.php` example from `src/Controllers/` 
+Follow the `WelcomeController.php` example from `app/Controllers/` 
 
 ### Running
 

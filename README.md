@@ -21,4 +21,4 @@ First, you must install composer and run
   ```php -S 127.0.0.1:8000```
 
 ---
-Made with [BladeOne](https://github.com/EFTEC/BladeOne)
+Made using [BladeOne](https://github.com/EFTEC/BladeOne)

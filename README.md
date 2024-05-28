@@ -22,3 +22,5 @@ First, you must install composer and run
 
 ---
 Made with [BladeOne](https://github.com/EFTEC/BladeOne)
+---
+`composer create-project razvancode/micromesh=dev-main`

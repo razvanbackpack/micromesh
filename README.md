@@ -15,12 +15,12 @@ Follow the `WelcomeController.php` example from `app/Controllers/`
 ### Running
 
 First, you must install composer and run  
-- ```composer install```
+- ```composer create-project razvancode/micromesh=dev-main```
 - ```cd public```
 - Then start a PHP server:  
   ```php -S 127.0.0.1:8000```
 ---
-`composer create-project razvancode/micromesh=dev-main`
+
 
 ---
 Made with [BladeOne](https://github.com/EFTEC/BladeOne)

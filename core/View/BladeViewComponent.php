@@ -2,14 +2,15 @@
 namespace Core\View;
 
 use Core\Config\Config;
+use Core\Resource\Resource;
 use eftec\bladeone\BladeOne;
 
 trait BladeViewComponent
 { 
     function view(string $view_name = "", array $parameters = [])
     {
-        $VIEWS_FOLDER = '../views';
-        $CACHE_FOLDER = '../cache';
+        $VIEWS_FOLDER = BASEDIR.'/resources/views';
+        $CACHE_FOLDER = BASEDIR.'/cache';
 
         $blade = new BladeOne($VIEWS_FOLDER, $CACHE_FOLDER);
         
@@ -25,6 +26,12 @@ trait BladeViewComponent
         $blade->directiveRT('Config', function($parameters)
         {
             echo Config::get($parameters);
+        });
+
+
+        $blade->directiveRT('Resource', function($parameters)
+        {
+            echo Resource::get($parameters);
         });
     }
 }

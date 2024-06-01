@@ -87,7 +87,7 @@ class Route
         return self::FourOhFour();
     }
 
-    public static function Next($registered_route, $request_data, $request_parameters)
+    private static function Next($registered_route, $request_data, $request_parameters)
     {
         $controller_class = $registered_route['class'];
         $controller_function = $registered_route['function_call'];
@@ -108,7 +108,7 @@ class Route
         );
     }
 
-    public static function FourOhFour()
+    private static function FourOhFour()
     {
         dd('404');
     }

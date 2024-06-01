@@ -23,13 +23,13 @@ trait BladeViewComponent
 
     function setCustomDirectives(BladeOne &$blade)
     {
-        $blade->directiveRT('Config', function($parameters)
+        $blade->directiveRT('config', function($parameters)
         {
             echo Config::get($parameters);
         });
 
 
-        $blade->directiveRT('Resource', function($parameters)
+        $blade->directiveRT('resource', function($parameters)
         {
             echo Resource::get($parameters);
         });

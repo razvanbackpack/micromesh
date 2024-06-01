@@ -6,23 +6,23 @@ export default defineConfig(({command}) => {
     build: {
       manifest: true,
       emptyOutDir: false,
-      outDir: 'public/',  // Output directory for the build
+      outDir: 'public/', 
       rollupOptions: {
-        input: 'resources/js/app.js',  // Entry point for the build
+        input: ['resources/js/app.js'], 
         output: {
-          entryFileNames: 'js/[name]-[hash].js',  // Add hash to JS file names
-          assetFileNames: 'assets/[name].[ext]',  // Add hash to asset file names
-          dir: 'public/',  // Output directory for assets
+          entryFileNames: 'js/[name]-[hash].js', 
+          assetFileNames: 'assets/build/[name].[ext]',  
+          dir: 'public/',  
         },
       },
     },
     server: {
       open: false,
-      port: 80,  // Consider using a different port for development
+      port: 80, 
       watch: {
         usePolling: true,
         paths: ['resources/js/**/*'],
-        ignoreInitial: true,  // Ignore initial build
+        ignoreInitial: true,  
       },
     }
   };

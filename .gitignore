@@ -5,7 +5,9 @@
 
 # Node modules
 node_modules/
-dist/
+
+build/
+.vite
 
 # Composer
 composer.phar

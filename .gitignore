@@ -8,6 +8,7 @@ node_modules/
 
 build/
 .vite
+public/js/
 
 # Composer
 composer.phar

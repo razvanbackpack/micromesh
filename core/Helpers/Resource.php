@@ -1,5 +1,5 @@
 <?php
-namespace Core\Resource;
+namespace Core\Helpers;
 
 class Resource 
 {

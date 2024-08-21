@@ -18,12 +18,10 @@ Follow the `WelcomeController.php` example from `app/Controllers/`
 First, you must install composer and npm, and run  
 - ```composer create-project razvancode/micromesh=dev-main```
 - ```composer install```
-- ```npm install```
 - Then start a PHP server:  
   ```php -S 127.0.0.1:80```
 
 #### After you're done developing
-- ```npm run build```
 - make `/public` folder the root
 
 ---

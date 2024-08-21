@@ -19,6 +19,8 @@ $dotenv->load(__DIR__.'/.env');
 // ==================== CORE DEFINES START =======================
 
 define('BASEDIR', realpath(__DIR__));
+define('PUBLIC_BASEDIR', realpath(__DIR__).'/public/');
+
 
 // ====================== CORE DEFINES END =======================
 

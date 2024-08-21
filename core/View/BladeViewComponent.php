@@ -3,7 +3,6 @@ namespace Core\View;
 
 use Core\Helpers\Config;
 use Core\Helpers\Asset;
-use Core\Helpers\Resource;
 use eftec\bladeone\BladeOne;
 
 trait BladeViewComponent
@@ -27,11 +26,6 @@ trait BladeViewComponent
         $blade->directiveRT('config', function($parameters)
         {
             echo Config::get($parameters);
-        });
-
-        $blade->directiveRT('resource', function($parameters)
-        {
-            echo Resource::get($parameters);
         });
 
         $blade->directiveRT('asset', function($parameters)

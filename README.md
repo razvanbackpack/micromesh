@@ -25,4 +25,4 @@ First, you must install composer and npm, and run
 - make `/public` folder the root
 
 ---
-Made using [BladeOne](https://github.com/EFTEC/BladeOne), and [Vite](https://vitejs.dev/)
+Made using [BladeOne](https://github.com/EFTEC/BladeOne)

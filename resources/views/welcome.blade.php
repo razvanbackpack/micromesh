@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{$_ENV['APP_NAME']}} - {{$_ENV['APP_VERSION']}}</title>
+    <script type="module" src="@asset('js/app.js')" type="text/javascript"></script>
+    <link rel="stylesheet" href="@asset('css/style.css')">
 </head>
 <body>
     <section id = "main-body">
@@ -17,7 +19,7 @@
         <footer>
         {{$_ENV['APP_NAME']}} - {{$_ENV['APP_VERSION']}}
 
-        @Config("app.dummy")
+        @config("app.dummy")
         </footer>
     </section>
 </body>

@@ -1,7 +1,7 @@
 <?php
 namespace App;
 // error_reporting(0);
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/vendor/autoload.php';
 
 use Core\Application\Application;
 use Symfony\Component\Dotenv\Dotenv;
@@ -10,7 +10,7 @@ use Symfony\Component\Dotenv\Dotenv;
 // ===================== DOTENV SETUP START ======================
 
 $dotenv = new Dotenv();
-$dotenv->load(__DIR__.'/../.env');
+$dotenv->load(__DIR__.'/.env');
 
 // ====================== DOTENV SETUP END =======================
 
@@ -18,8 +18,9 @@ $dotenv->load(__DIR__.'/../.env');
 
 // ==================== CORE DEFINES START =======================
 
-define('BASEDIR', realpath(__DIR__ . '/..'));
-define('PUBLIC_BASEDIR', realpath(__DIR__));
+define('BASEDIR', realpath(__DIR__));
+define('PUBLIC_BASEDIR', realpath(__DIR__).'/public/');
+
 
 // ====================== CORE DEFINES END =======================
 

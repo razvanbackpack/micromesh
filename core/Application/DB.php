@@ -46,14 +46,14 @@ class DB {
       ));
     } catch (PDOException $e)
     {
-      dd(
-        "PDO CONNECTION ERROR",
-        [
-          "code" => $e->getCode(),
-          "message" => $e->getMessage(),
-          "trace" => $e->getTrace(),
-        ],
-      );
+      // dd(
+      //   "PDO CONNECTION ERROR",
+      //   [
+      //     "code" => $e->getCode(),
+      //     "message" => $e->getMessage(),
+      //     "trace" => $e->getTrace(),
+      //   ],
+      // );
     }
   }
 

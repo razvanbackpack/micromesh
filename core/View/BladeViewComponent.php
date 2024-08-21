@@ -1,15 +1,16 @@
 <?php
 namespace Core\View;
 
-use Core\Config\Config;
+use Core\Helpers\Config;
+use Core\Helpers\Asset;
 use eftec\bladeone\BladeOne;
 
 trait BladeViewComponent
 { 
     function view(string $view_name = "", array $parameters = [])
     {
-        $VIEWS_FOLDER = '../views';
-        $CACHE_FOLDER = '../cache';
+        $VIEWS_FOLDER = BASEDIR.'/resources/views';
+        $CACHE_FOLDER = BASEDIR.'/cache';
 
         $blade = new BladeOne($VIEWS_FOLDER, $CACHE_FOLDER);
         
@@ -22,9 +23,14 @@ trait BladeViewComponent
 
     function setCustomDirectives(BladeOne &$blade)
     {
-        $blade->directiveRT('Config', function($parameters)
+        $blade->directiveRT('config', function($parameters)
         {
             echo Config::get($parameters);
+        });
+
+        $blade->directiveRT('asset', function($parameters)
+        {
+            echo Asset::get($parameters);
         });
     }
 }

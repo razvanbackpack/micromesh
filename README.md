@@ -14,11 +14,17 @@ Follow the `WelcomeController.php` example from `app/Controllers/`
 
 ### Running
 
-First, you must install composer and run  
+#### Development
+First, you must install composer and npm, and run  
 - ```composer create-project razvancode/micromesh=dev-main```
-- ```cd public```
+- ```composer install```
+- ```npm install```
 - Then start a PHP server:  
-  ```php -S 127.0.0.1:8000```
+  ```php -S 127.0.0.1:80```
+
+#### After you're done developing
+- ```npm run build```
+- make `/public` folder the root
 
 ---
-Made using [BladeOne](https://github.com/EFTEC/BladeOne)
+Made using [BladeOne](https://github.com/EFTEC/BladeOne), and [Vite](https://vitejs.dev/)

@@ -8,6 +8,7 @@ class Route
 {
     public static array $ROUTES;
 
+    // routes assigned with get
     public static function get(
         string $route_link,
         string|Closure $controller,
@@ -22,6 +23,7 @@ class Route
         ];
     }
 
+    // routes assigned with post
     public static function post(
         string $route_link,
         string $controller,
@@ -55,6 +57,12 @@ class Route
             if($request['link'] == $registered_route['link'])
                 return self::Next($registered_route, $request, $request_parameters);
     
+
+            // TODO: figure out a way to add optional parameters. 
+            // TODO: for now the code just checks if the params 
+            // TODO: broken for the link are equal in number to 
+            // TODO: the ones registered in the route
+            
             if(count($request_link_parts) === count($route_link_parts))
             {
                 foreach($route_link_parts as $route_link_part_key => $route_link_part)

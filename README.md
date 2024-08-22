@@ -18,8 +18,7 @@ Follow the `WelcomeController.php` example from `app/Controllers/`
 First, you must install composer and npm, and run  
 - ```composer create-project razvancode/micromesh=dev-main```
 - ```composer install```
-- To start, run
-  ```php mesh run```
+- To start, run  ```php mesh run```
 
 #### After you're done developing
 - make `/public` folder the root

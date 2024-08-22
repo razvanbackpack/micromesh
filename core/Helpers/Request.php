@@ -8,8 +8,8 @@ class Request
     public static function CaptureRequest()
     {
         self::$REQUEST_DATA = [
-            'link' => ltrim($_SERVER['REQUEST_URI'], '/'),
-            'type' => $_SERVER['REQUEST_METHOD'],
+            'link' => $_SERVER['REQUEST_URI'],
+            'method' => $_SERVER['REQUEST_METHOD'],
             'post' => $_POST,
         ];
     }

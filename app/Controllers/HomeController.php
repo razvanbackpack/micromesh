@@ -1,7 +1,6 @@
 <?php
 namespace App\Controllers;
 use App\Services\Welcome\Welcome;
-use App\Core\Config\Config;
 
 class HomeController extends Controller
 {
@@ -14,8 +13,6 @@ class HomeController extends Controller
     {
         $Welcome = new Welcome();
         $welcomeMessage = $Welcome->GetWelcomeMessage();
-        
-     
 
         return $this->view('welcome',
             ['message' => $welcomeMessage

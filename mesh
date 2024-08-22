@@ -6,6 +6,7 @@ require __DIR__.'/vendor/autoload.php';
 use Symfony\Component\Console\Application;
 use Core\CLI\CLIConfig;
 use Core\CLI\Commands\RunCommand;
+use Core\CLI\Commands\InitCommand;
 
 $application = new Application(
     CLIConfig::$config['cli_app_name'],
@@ -13,5 +14,6 @@ $application = new Application(
 );
 
 $application->add(new RunCommand());
+$application->add(new InitCommand());
 $application->run();
 # Create src/Command/RunCommand.php

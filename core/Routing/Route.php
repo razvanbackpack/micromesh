@@ -3,121 +3,189 @@ namespace Core\Routing;
 
 use Core\Helpers\Request;
 use Closure;
+use Exception;
 
-class Route 
+class Route
 {
-    public static array $ROUTES;
+    public static array $ROUTES = [];
+    private static array $globalMiddleware = [];
+    private static $notFoundHandler;
 
-    // routes assigned with get
-    public static function get(
-        string $route_link,
-        string|Closure $controller,
-        string $function_call = null,
-    )
-    {
+    public static function addRoute($method, $path, $handler, $middleware = []) {
         self::$ROUTES[] = [
-            'link' => $route_link,
-            'class' => $controller,
-            'function_call' => $function_call,
-            'type' => 'GET',
+            'method' => $method,
+            'path' => $path,
+            'handler' => $handler,
+            'middleware' => $middleware
         ];
     }
 
-    // routes assigned with post
-    public static function post(
-        string $route_link,
-        string $controller,
-        string $function_call,
-    )
-    {
-        self::$ROUTES[] = [
-            'link' => $route_link,
-            'class' => $controller,
-            'function_call' => $function_call,
-            'type' => 'POST',
-        ];
+    public static function get($path, $handler, $middleware = []) {
+        self::addRoute('GET', $path, $handler, $middleware);
+    }
+
+    public static function post($path, $handler, $middleware = []) {
+        self::addRoute('POST', $path, $handler, $middleware);
+    }
+
+    
+    public function addGlobalMiddleware($middleware) {
+        self::$globalMiddleware[] = $middleware;
+    }
+
+    public function setNotFoundHandler($handler) {
+        self::$notFoundHandler = $handler;
     }
 
     public static function ValidateRoute()
     {
         Request::CaptureRequest();
         $request = Request::$REQUEST_DATA;
-        $request_parameters = [];
 
-       
-        foreach(self::$ROUTES as $registered_route)
-        {
-            $next_route = false;
-            $request_link_parts = explode('/', $request['link']);
-            $route_link_parts = explode('/', $registered_route['link']);
-           
-            if($request['type'] != $registered_route['type'])
-                continue;
-
-            if($request['link'] == $registered_route['link'])
-                return self::Next($registered_route, $request, $request_parameters);
-    
-
-            // TODO: figure out a way to add optional parameters. 
-            // TODO: for now the code just checks if the params 
-            // TODO: broken for the link are equal in number to 
-            // TODO: the ones registered in the route
-            
-            if(count($request_link_parts) === count($route_link_parts))
-            {
-                foreach($route_link_parts as $route_link_part_key => $route_link_part)
-                {
-                    if(preg_match('/\{([^*]*)\}/', $route_link_part))
-                    {
-
-                        $request_parameters[] = $request_link_parts[$route_link_part_key];
-                    }
-                    else 
-                    {
-                        if($request_link_parts[$route_link_part_key] != $route_link_part) 
-                        {
-                            $next_route = true;
-                            break;
-                        }
-                       
-                    }
-                }
-               
-                if($next_route) continue;
-           
-                return self::Next($registered_route, $request, $request_parameters);
-            }
-            else
-                continue;   
-
+        $uri = self::sanitizeUri($request['link']);
+        $method = self::sanitizeMethod($request['method']);
+        
+        if (!in_array($method, ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'])) {
+            return self::respondWithError(405, 'Method Not Allowed');
         }
 
-        return self::FourOhFour();
+        $matchedRoute = null;
+        $params = [];
+
+        foreach (self::$ROUTES as $route) {
+            if ($route['method'] !== $method) {
+                continue;
+            }
+
+            $pattern = self::convertRouteToRegex($route['path']);
+            
+            if (preg_match($pattern, $uri, $matches)) {
+                $matchedRoute = $route;
+                $params = array_filter($matches, function($key) use ($matches) {
+                    return is_string($key) && $matches[$key] !== '';
+                }, ARRAY_FILTER_USE_KEY);
+                break;
+            }
+        }
+
+
+        if ($matchedRoute === null) {
+            return self::handleNotFound();
+        }
+        // Apply global middleware
+        foreach (self::$globalMiddleware as $middleware) {
+            $result = self::executeMiddleware($middleware, $params);
+            if ($result !== null) {
+                return $result;
+            }
+        }
+
+        // Apply route-specific middleware
+        foreach ($matchedRoute['middleware'] as $middleware) {
+            $result = self::executeMiddleware($middleware, $params);
+            if ($result !== null) {
+                return $result;
+            }
+        }
+
+        try {
+            return self::Next($matchedRoute['handler'], $params);
+        } catch (Exception $e) {
+            return self::respondWithError(500, 'Internal Server Error', $e->getMessage());
+        }
     }
 
-    private static function Next($registered_route, $request_data, $request_parameters)
+    private static function Next($handler, $params)
     {
-        $controller_class = $registered_route['class'];
-        $controller_function = $registered_route['function_call'];
-
-   
-        if($controller_function===null)
-            return call_user_func_array(
-                $controller_class,
-                $request_parameters
-        );
-        
-        return call_user_func_array(
-            [
-                new $controller_class, 
-                $controller_function
-            ],
-            $request_parameters 
-        );
+        try {
+            if (is_callable($handler)) {
+                return call_user_func_array($handler, $params);
+            } elseif (is_array($handler) && count($handler) == 2) {
+                list($class, $method) = $handler;
+                if (is_string($class)) {
+                    $controller = new $class();
+                } else {
+                    $controller = $class;
+                }
+                return $controller->$method(...$params);
+            } else {
+                throw new Exception('Invalid route handler');
+            }
+        } catch (Exception $e) {
+            dd($e);
+            return self::respondWithError(500, 'Internal Server Error', $e->getMessage());
+        }
     }
 
-    private static function FourOhFour()
-    {
-        dd('404');
+    private static function convertRouteToRegex($route) {
+        $route = trim($route, '/');
+        $routeParts = explode('/', $route);
+        $pattern = [];
+
+        foreach ($routeParts as $part) {
+            if (strpos($part, '{') !== false) {
+                $paramName = trim($part, '{}');
+                if (substr($paramName, -1) === '?') {
+                    $paramName = rtrim($paramName, '?');
+                    $pattern[] = "(?:\/(?P<$paramName>[^\/]+))?";
+                } else {
+                    $pattern[] = "\/(?P<$paramName>[^\/]+)";
+                }
+            } else {
+                $pattern[] = '\/' . preg_quote($part);
+            }
+        }
+
+        // Ensure the last part is truly optional
+        $lastPart = end($pattern);
+        if (strpos($lastPart, ')?') !== false) {
+            array_pop($pattern);
+            $pattern[] = $lastPart . '?';
+        }
+
+        return '/^' . implode('', $pattern) . '\/?$/';
     }
+
+    private static function sanitizeMethod($method) {
+        return strtoupper(trim($method));
+    }
+
+    private static function sanitizeUri($uri) {
+        if($uri !== '/') $uri = rtrim($uri, '/');
+        $uri = filter_var($uri, FILTER_SANITIZE_URL);
+        return $uri !== false ? $uri : '';
+    }
+
+    private static function executeMiddleware($middleware, $params) {
+        try {
+            $result = call_user_func_array($middleware, $params);
+            if ($result === false) {
+                return self::respondWithError(403, 'Forbidden');
+            }
+            return $result;
+        } catch (Exception $e) {
+            return self::respondWithError(500, 'Middleware Error', $e->getMessage());
+        }
+    }
+
+    private static function handleNotFound() {
+        if (self::$notFoundHandler) {
+            
+            return call_user_func(self::$notFoundHandler);
+        }
+        return self::respondWithError(404, 'Not Found');
+    }
+
+    private static function respondWithError($code, $message, $details = '') {
+        http_response_code($code);
+        return json_encode([
+            'error' => [
+                'code' => $code,
+                'message' => $message,
+                'details' => $details
+            ]
+        ]);
+    }
+
+
 }

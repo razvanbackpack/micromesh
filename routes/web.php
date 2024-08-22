@@ -1,14 +1,24 @@
 <?php
 use Core\Routing\Route;
 use App\Controllers\HomeController;
-use Core\Application\DB;
 
-Route::get("", HomeController::class, "Home");
-Route::get("test", function () {
-	dd(
 
-		DB::query(
-			"SELECT * FROM contact_log"
-		)
-	);
-});
+Route::get("", [HomeController::class, "Home"]);
+
+Route::get("/test/{id}/comments/{commentId?}", 
+	function($id, $commentId = 0) {
+		if($commentId) {
+			dd('$ID: ' . $id, '$commentId: '.$commentId);
+		} else {
+			dd('$ID: ' . $id);
+		}
+	}, 
+	[
+		// middleware
+		function($id) {
+			if($id > 1) {
+				dd('sorry not allowed on route. $id must be <1');
+			}
+		}
+	]
+);

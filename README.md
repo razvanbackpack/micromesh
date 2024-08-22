@@ -16,7 +16,7 @@ Follow the `WelcomeController.php` example from `app/Controllers/`
 ### Running
 
 #### Development
-First, you must install composer and npm, and run  
+First, you must install composer, and then run:
 - ```composer create-project razvancode/micromesh=dev-main```
 - ```composer install```
 - Run `php mesh init` to have the `.env` file created from `env.example`

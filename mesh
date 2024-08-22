@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Core\CLI\CLIConfig;
+use Core\CLI\Commands\RunCommand;
+
+$application = new Application(
+    CLIConfig::$config['cli_app_name'],
+    CLIConfig::$config['cli_app_version']
+);
+
+$application->add(new RunCommand());
+$application->run();
+# Create src/Command/RunCommand.php

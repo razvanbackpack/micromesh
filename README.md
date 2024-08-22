@@ -18,11 +18,11 @@ Follow the `WelcomeController.php` example from `app/Controllers/`
 First, you must install composer and npm, and run  
 - ```composer create-project razvancode/micromesh=dev-main```
 - ```composer install```
-- Then start a PHP server:  
-  ```php -S 127.0.0.1:80```
+- To start, run
+  ```php mesh run```
 
 #### After you're done developing
 - make `/public` folder the root
 
 ---
-Made using [BladeOne](https://github.com/EFTEC/BladeOne)
+Made using [BladeOne](https://github.com/EFTEC/BladeOne), and [Symfony Console](https://github.com/symfony/console)

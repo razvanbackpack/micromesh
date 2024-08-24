@@ -5,7 +5,7 @@ class Config
 {
     public static string $CONFIG_FILE_PATH = BASEDIR.'\\config';
 
-    public static function get(string $config_path = "")
+    public static function get(string $config_path = ""): array
     {
         //TODO: make an array with all available config files for better checks and to avoid warnings
         if($config_path == "") return null;
@@ -28,7 +28,7 @@ class Config
         if($config_file_data === null || !$config_file_data) return "";
         $keys = [];
         $keys = str_replace(array('[', ']'), array("['", "']"), $keys); // wrapping with "'" (single qoutes)
-        $result = "";
+        $result = [];
         
         eval('$result = $config_file_data' . $config_indexes . ';');
         return $result;

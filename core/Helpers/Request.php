@@ -12,5 +12,7 @@ class Request
             'method' => $_SERVER['REQUEST_METHOD'],
             'post' => $_POST,
         ];
+
+        // TODO: referrers and headers for ref & header check on route
     }
 }

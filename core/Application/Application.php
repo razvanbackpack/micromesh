@@ -26,6 +26,6 @@ class Application
     private function loadRoutes()
     {
         // TODO: make a route registration file
-        require_once BASEDIR.'/routes/web.php';
+        Route::RegisterRoutes(BASEDIR.'/routes/');
     }
 }

@@ -2,6 +2,7 @@
 namespace Core\Routing;
 
 use Core\Helpers\Request;
+use Core\Helpers\Config;
 use Closure;
 use Exception;
 
@@ -10,11 +11,27 @@ class Route
     public static array $ROUTES = [];
     private static array $globalMiddleware = [];
     private static $notFoundHandler;
+    private static string $prefix = '';
+
+    public static function RegisterRoutes($basedir)
+    {
+        $route_files = Config::get('routes');
+        foreach($route_files as $route_file)
+        {
+            $file = $basedir.$route_file['file'];
+            if (!file_exists($file)) {
+                continue;
+            }
+          
+            self::$prefix = $route_file['prefix'].'/';
+            require $file;
+        }
+    }
 
     public static function addRoute($method, $path, $handler, $middleware = []) {
         self::$ROUTES[] = [
             'method' => $method,
-            'path' => $path,
+            'path' => self::$prefix . ltrim($path, '/'),
             'handler' => $handler,
             'middleware' => $middleware
         ];

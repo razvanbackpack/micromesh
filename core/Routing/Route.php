@@ -72,7 +72,7 @@ class Route
 
         
         // TODO: handle check_referrer and allowed_headers from routes.php config
-        dd(self::$ROUTES,self::checkReferer());
+        dd(self::$ROUTES,self::checkReferer(), $request);
         $uri = self::sanitizeUri($request['link']);
         $method = self::sanitizeMethod($request['method']);
 
@@ -232,5 +232,10 @@ class Route
         $referer = $_SERVER['HTTP_REFERER'] ?? '';
         $allowedDomain = $_SERVER['APP_URL'];
         return strpos($referer, $allowedDomain) === 0;
+    }
+
+    private static function checkHeaders($route_headers, $request_headers)
+    {
+
     }
 }

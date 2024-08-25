@@ -7,12 +7,22 @@ class Request
 
     public static function CaptureRequest()
     {
-        self::$REQUEST_DATA = [
-            'link' => $_SERVER['REQUEST_URI'],
-            'method' => $_SERVER['REQUEST_METHOD'],
-            'post' => $_POST,
-        ];
+        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+        $headers = getallheaders();
+        $headers_arr = [];
+        $request_method = $_SERVER['REQUEST_METHOD'];
+        $request_uri = $_SERVER['REQUEST_URI'];
 
-        // TODO: referrers and headers for ref & header check on route
+        foreach ($headers as $name => $value) {
+            $headers_arr[$name] = $value;
+        }
+
+        self::$REQUEST_DATA = [
+            'link' => $request_uri,
+            'method' => $request_method,
+            'post' => $_POST,
+            'headers' => $headers_arr,
+            'referrer' => $referrer
+        ];
     }
 }

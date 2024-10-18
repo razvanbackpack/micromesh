@@ -35,7 +35,7 @@ class Log
 		
 		$log_file_name = "LOG_GENERAL";
 		if($separate_logging) $log_file_name = "LOG_".$level;
-		$log_file_path = $log_config['path'].'/'.$log_file_name.'.log';
+		$log_file_path = '../'.$log_config['path'].'/'.$log_file_name.'.log';
 		self::ensureLogFileExists($log_file_path);
 		if(is_null($message)) {
 			$message = "Ea aliquip in esse ea occaecat velit exercitation laborum proident deserunt.";

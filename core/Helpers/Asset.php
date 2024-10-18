@@ -5,6 +5,8 @@ class Asset
 {
     public static string $ASSETS_BASE_PATH = BASEDIR.'\\assets\\';
 
+    public static ?int $PORT = null;
+
     public static function get(string $resource_path = "")
     {
         //TODO: make an array with all available config files for better checks and to avoid warnings
@@ -32,16 +34,17 @@ class Asset
         $final_include_path = $resource_path_src;
         if($manifest != [])
         {
+            
             $manifestResource = $manifest[$resource_path_src] ?? [];
             if($manifestResource != [])
             {
-                $final_include_path = $_ENV['APP_URL'] .'/'. $manifestResource['file'];
+                $final_include_path = $_ENV['APP_URL'].'/'. $manifestResource['file'];
                 return $final_include_path;
             }
         }  else {
-            $resource_path = $_ENV['APP_URL'] .'/public/assets/'.$resource_path;
+            $resource_path = $_ENV['APP_URL'].'/assets/'.$resource_path;
         }
-        
+
         return $resource_path;
     }
 }

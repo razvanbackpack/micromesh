@@ -2,6 +2,8 @@
 namespace App\Controllers;
 use App\Services\Welcome\Welcome;
 use Core\Helpers\Log;
+use Core\Helpers\Config;
+use Core\Http\Response;
 
 class HomeController extends Controller
 {
@@ -16,7 +18,7 @@ class HomeController extends Controller
         $welcomeMessage = $Welcome->GetWelcomeMessage();
 
         Log::debug('this work???');
-        dd('hey home');
+
         return $this->view('welcome',
             ['message' => $welcomeMessage
         ]);

@@ -1,9 +1,10 @@
 <?php
-namespace Core\Routing;
+namespace Core\Http;
 
 use Core\Helpers\Request;
 use Core\Helpers\Config;
 use Core\Http\Response;
+use Core\Http\Cors;
 
 use Closure;
 use Exception;
@@ -11,15 +12,26 @@ use Exception;
 class Route
 {
     public static array $ROUTES = [];
-    private static array $globalMiddleware = [];
+    private static array $GLOBAL_MIDDLEWARE = [];
     private static $notFoundHandler;
     private static string $prefix = '';
-    private static bool $check_ref = false;
-    private static array $allowed_headers = [];
+    private static bool $CHECK_REFERER = false;
+    private static array $ALLOWED_METHODS =[];
 
+    private static array $ALLOWED_HEADERS = [];
+    private static array $ROUTE_ALLOWED_HEADERS = [];
+
+    public static function initiate() 
+    {
+        $http_config = Config::get('http');
+
+        self::$ALLOWED_HEADERS = $http_config['allowed_headers'];
+        self::$ALLOWED_METHODS = $http_config['allowed_methods'];
+    }
     public static function RegisterRoutes($basedir)
     {
         $route_files = Config::get('routes');
+       
         foreach ($route_files as $route_file) {
             $file = $basedir . $route_file['file'];
             if (!file_exists($file)) {
@@ -27,8 +39,8 @@ class Route
             }
 
             self::$prefix = $route_file['prefix'] . '/';
-            self::$check_ref = $route_file['check_referrer'] ?? false;
-            self::$allowed_headers = $route_file['allowed_headers'] ?? [];
+            self::$CHECK_REFERER = $route_file['check_referrer'] ?? false;
+            self::$ROUTE_ALLOWED_HEADERS = $route_file['allowed_headers'] ?? [];
             require $file;
         }
     }
@@ -40,8 +52,8 @@ class Route
             'path' => self::$prefix . ltrim($path, '/'),
             'handler' => $handler,
             'middleware' => $middleware,
-            'check_referrer' => self::$check_ref,
-            'allowed_headers' => self::$allowed_headers,
+            'check_referrer' => self::$CHECK_REFERER,
+            'allowed_headers' => self::$ROUTE_ALLOWED_HEADERS,
         ];
     }
 
@@ -57,7 +69,7 @@ class Route
 
     public function addGlobalMiddleware($middleware)
     {
-        self::$globalMiddleware[] = $middleware;
+        self::$GLOBAL_MIDDLEWARE[] = $middleware;
     }
 
     public function setNotFoundHandler($handler)
@@ -67,16 +79,17 @@ class Route
 
     public static function ValidateRoute()
     {
+        (new Cors())->handleCors();
         Request::CaptureRequest();
         $request = Request::$REQUEST_DATA;
 
         
         // TODO: handle check_referrer and allowed_headers from routes.php config
-        dd(self::$ROUTES,self::checkReferer(), $request);
+
         $uri = self::sanitizeUri($request['link']);
         $method = self::sanitizeMethod($request['method']);
 
-        if (!in_array($method, ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'])) {
+        if (!in_array($method, self::$ALLOWED_METHODS)) {
             return self::respondWithError(405, 'Method Not Allowed');
         }
 
@@ -107,7 +120,7 @@ class Route
             return self::handleNotFound();
         }
         // Apply global middleware
-        foreach (self::$globalMiddleware as $middleware) {
+        foreach (self::$GLOBAL_MIDDLEWARE as $middleware) {
             $result = self::executeMiddleware($middleware, $params);
             if ($result !== null) {
                 return $result;
@@ -234,8 +247,33 @@ class Route
         return strpos($referer, $allowedDomain) === 0;
     }
 
-    private static function checkHeaders($route_headers, $request_headers)
-    {
-
+    function checkRequestHeaders($route_headers, $request_headers) {
+        $result = [
+            'missingHeaders' => [],
+            'hasError' => false
+        ];
+    
+        // Normalize allowed headers to lowercase for case-insensitive comparison
+        $allowedHeaders = array_map('strtolower', $allowedHeaders);
+    
+        // Get all headers from the current request
+        $requestHeaders = getallheaders();
+    
+        // Check each allowed header
+        foreach ($allowedHeaders as $header) {
+            $headerFound = false;
+            foreach ($requestHeaders as $key => $value) {
+                if (strtolower($key) === $header) {
+                    $headerFound = true;
+                    break;
+                }
+            }
+            if (!$headerFound) {
+                $result['missingHeaders'][] = $header;
+                $result['hasError'] = true;
+            }
+        }
+    
+        return $result;
     }
 }

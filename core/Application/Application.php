@@ -1,13 +1,20 @@
 <?php
 
 namespace Core\Application;
-use Core\Routing\Route;
+
+use Core\Helpers\Resource;
+use Core\Helpers\Asset;
+use Core\Http\Route;
 
 class Application 
 {
-    public function __construct()
+    public function __construct(?int $port = null)
     {
-        
+        if($port)
+        {
+            Asset::$PORT=$port;
+            Resource::$PORT=$port;
+        }
     }
 
     public function Run()
@@ -25,7 +32,7 @@ class Application
 
     private function loadRoutes()
     {
-        // TODO: make a route registration file
+        Route::initiate();
         Route::RegisterRoutes(BASEDIR.'/routes/');
     }
 }

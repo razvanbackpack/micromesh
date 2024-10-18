@@ -6,6 +6,7 @@ class Resource
     public static string $RESOURCES_BASE_PATH = BASEDIR.'\\resources\\';
     public static string $BUILD_PATH = BASEDIR.'\\public\\';
     public static string $MANIFEST_PATH_FOLDER = BASEDIR.'\\public\\.vite\\manifest.json';
+    public static ?int $PORT = null;
 
     public static function get(string $resource_path = "")
     {
@@ -39,7 +40,7 @@ class Resource
             $manifestResource = $manifest[$resource_path_src] ?? [];
             if($manifestResource != [])
             {
-                $final_include_path = $_ENV['APP_URL'] .'/'. $manifestResource['file'];
+                $final_include_path = $_ENV['APP_URL'].'/'. $manifestResource['file'];
                 return $final_include_path;
             }
         } 

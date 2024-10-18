@@ -19,7 +19,6 @@ class HomeController extends Controller
 
         Log::debug('this work???');
 
-        Response::make()->json(Config::get('app'))->send();
         return $this->view('welcome',
             ['message' => $welcomeMessage
         ]);

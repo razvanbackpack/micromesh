@@ -28,7 +28,7 @@ define('PUBLIC_BASEDIR', realpath(__DIR__).'/public/');
 
 // ========================= APP START ===========================
 
-$App = new Application();
+$App = new Application(8888);
 $App->Run();
 $App->Exit();
 

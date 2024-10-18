@@ -17,7 +17,6 @@ class Route
     private static string $prefix = '';
     private static bool $CHECK_REFERER = false;
     private static array $ALLOWED_METHODS =[];
-
     private static array $ALLOWED_HEADERS = [];
     private static array $ROUTE_ALLOWED_HEADERS = [];
 
@@ -86,6 +85,7 @@ class Route
         
         // TODO: handle check_referrer and allowed_headers from routes.php config
 
+        dd(self::checkReferer(), self::checkRequestHeaders());
         $uri = self::sanitizeUri($request['link']);
         $method = self::sanitizeMethod($request['method']);
 
@@ -254,7 +254,7 @@ class Route
         ];
     
         // Normalize allowed headers to lowercase for case-insensitive comparison
-        $allowedHeaders = array_map('strtolower', $allowedHeaders);
+        $allowedHeaders = array_map('strtolower', selF::$ALLOWED_HEADERS);
     
         // Get all headers from the current request
         $requestHeaders = getallheaders();

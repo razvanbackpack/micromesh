@@ -1,5 +1,6 @@
 .env
-
+.log
+  
 # Blade Cache
 /cache/*.bladec
 
@@ -13,3 +14,5 @@ public/js/
 # Composer
 composer.phar
 /vendor/
+
+.log

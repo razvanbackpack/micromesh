@@ -1,8 +1,5 @@
 <?php
-use Core\Routing\Route;
-use App\Controllers\HomeController;
+use Core\Http\Route;
+use App\Controllers\ApiHelloController;
 
-
-Route::get("test",function() {
-  echo 'hey!!! :DD';
-});
+Route::get('test', [ApiHelloController::class, 'ApiHello']);

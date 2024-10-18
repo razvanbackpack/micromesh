@@ -26,6 +26,7 @@ class RunCommand extends Command
         $output->writeln("Starting PHP server on http://$host:$port");
         $output->writeln("Press Ctrl+C to stop the server");
 
+        chdir("public");
         passthru("php -S $host:$port");
 
         return Command::SUCCESS;

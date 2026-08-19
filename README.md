@@ -1,4 +1,4 @@
-# MicroMesh
+# micromesh
 
 [![Tests](https://github.com/razvanbackpack/micromesh/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/razvanbackpack/micromesh/actions/workflows/tests.yml)
 

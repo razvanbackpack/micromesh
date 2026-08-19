@@ -1,0 +1,18 @@
+.env
+*.log
+  
+# Blade Cache
+/cache/*.bladec
+
+# Node modules
+node_modules/
+
+build/
+.vite
+public/js/
+
+# Composer
+composer.phar
+/vendor/
+
+.log

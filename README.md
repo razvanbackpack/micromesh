@@ -5,8 +5,6 @@
 MicroMesh is a small and lightweight PHP framework, currently being built as a learning project. It is in no way, shape, or form ready to 
 be used in the wild. 
 
-*Note: Not recommended for any use except experimentation. It is still under development.*
-
 ### What can it do:
 - Basic routing
   - Only GET and POST

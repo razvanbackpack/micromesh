@@ -11,6 +11,11 @@
             "Core\\":"core/"
         }
     },
+    "config": {
+        "platform": {
+            "php": "8.2.0"
+        }
+    },
     "scripts": {
         "test": "phpunit -c phpunit.xml"
     },

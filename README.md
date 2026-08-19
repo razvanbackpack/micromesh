@@ -1,5 +1,7 @@
 # MicroMesh
 
+[![Tests](https://github.com/razvanbackpack/micromesh/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/razvanbackpack/micromesh/actions/workflows/tests.yml)
+
 MicroMesh is a small and lightweight PHP framework, currently being built as a learning project. It is in no way, shape, or form ready to 
 be used in the wild. 
 
